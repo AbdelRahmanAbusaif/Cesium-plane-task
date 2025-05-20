@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class AircraftsAnimations : MonoBehaviour
@@ -12,9 +13,6 @@ public class AircraftsAnimations : MonoBehaviour
     public Transform LowerWingDirectionX; // Rudder (Yaw)
     public Transform LowerWingDirectionY; // Elevator (Pitch)
 
-    [Header("Engine")]
-    public Transform FrontEngine; // Propeller
-
     [Header("Aircraft Inputs")]
     [Range(0, 1000)] public float airspeed;
     [Range(-45, 45)] public float pitch; // Nose up/down
@@ -25,7 +23,6 @@ public class AircraftsAnimations : MonoBehaviour
     {
         AnimateFlaps();
         AnimateRearControl();
-        AnimatePropeller();
     }
 
     void AnimateFlaps()
@@ -49,12 +46,5 @@ public class AircraftsAnimations : MonoBehaviour
         // Rudder controlled by yaw
         float rudderAngle = Mathf.Clamp(yaw, -25f, 25f);
         LowerWingDirectionX.localRotation = Quaternion.Euler(0f, rudderAngle, 0f);
-    }
-
-    void AnimatePropeller()
-    {
-        // Simulate propeller spinning based on airspeed
-        float speedFactor = Mathf.Clamp01(airspeed / 300f); // Normalize speed
-        FrontEngine.Rotate(Vector3.up * 2000f * speedFactor * Time.deltaTime);
     }
 }
